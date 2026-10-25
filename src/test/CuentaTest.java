@@ -1,5 +1,7 @@
 package test;
 
+import pkg.Movimiento;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
@@ -44,10 +46,14 @@ class CuentaTest {
 	}
 	
 	@Test
-	void testMovimiento() {
-		cta.ingresar(25);
-		assertEquals(1, cta.getMovimientos().size());
-		assertEquals(25.0, cta.getMovimientos().get(0).getImporte());
+	void testAñadirMovimiento() {
+		cta.añadirMovimiento(10, Movimiento.SIGNO.D, "Ingreso");
+		assertEquals(1, cta.historialMovimientos().size());
+		assertEquals(10.0, cta.historialMovimientos().get(0).getImporte());
+		assertEquals(Movimiento.SIGNO.D, cta.historialMovimientos().get(0).getSigno());
+		assertEquals("Ingreso", cta.historialMovimientos().get(0).getDetalle());
 	}
+	
+	
 
 }

@@ -8,10 +8,13 @@ public class Cuenta {
 	// void historialmov
 	// void añadirmov
 	
+	public static final double LIMITE = -500;	// Max. se puede deber 500€
+	
 	private String mNumero;
 	private String nTitular;
 	private double mSaldo;
 	private List<Movimiento> mMovimientos = new ArrayList<>();
+	private List<String> mErrores = new ArrayList<>();	// Para el registro de errores
 	
 	public Cuenta(String mNumero, String nTitular, double saldo) {
 		super();
@@ -43,6 +46,10 @@ public class Cuenta {
 	public void setSaldo(double saldo) {
 		this.mSaldo = saldo;
 	}
+	
+	public List<String> getErrores(){
+		return mErrores;
+	}
 
 	public List<Movimiento> historialMovimientos() {	//	Es el getter de movimientos
 		return mMovimientos;
@@ -64,8 +71,12 @@ public class Cuenta {
 	}
 	
 	public void retirar(double x) {
-		mSaldo -= x;
-		añadirMovimiento(x, Movimiento.SIGNO.D, "Reintegro");
+		if(mSaldo - x >= LIMITE) {
+			mSaldo -= x;
+			añadirMovimiento(x, Movimiento.SIGNO.D, "Reintegro");
+		}else {
+			mErrores.add("Fondos insuficientes (saldo "+ (int) mSaldo + "€) en la cuenta "+ mNumero + " para el reintegro de "+ (int) x +"€");
+		}
 	}
 
 	

@@ -53,18 +53,19 @@ public class Cuenta {
 	}
 	
 	public void añadirMovimiento(double importe, Movimiento.SIGNO signo, String detalle) {
-		Movimiento m = new Movimiento(10, "Ingreso");
-		m.setSigno(Movimiento.SIGNO.D);
+		Movimiento m = new Movimiento(importe, detalle);
+		m.setSigno(signo);
 		mMovimientos.add(m);
 	}
 	
 	public void ingresar(double x) {
-		mSaldo = 45;
-		añadirMovimiento(25, Movimiento.SIGNO.H, "Ingreso");
+		mSaldo += x;
+		añadirMovimiento(x, Movimiento.SIGNO.H, "Ingreso");
 	}
 	
 	public void retirar(double x) {
-		mSaldo = 0;
+		mSaldo -= x;
+		añadirMovimiento(x, Movimiento.SIGNO.D, "Reintegro");
 	}
 
 	
